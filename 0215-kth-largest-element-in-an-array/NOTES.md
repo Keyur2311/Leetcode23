@@ -9,3 +9,7 @@
 #### Solution 2:-
 -  use priority queue according to question
 -  see soolution code for more understanding
+
+### similar questions
+- [K closest points from origin](https://leetcode.com/problems/k-closest-points-to-origin/)
+- [Top K frequent elements](https://leetcode.com/problems/top-k-frequent-elements/)
