@@ -11,17 +11,22 @@
  */
 class Solution {
 public:
-    priority_queue<int> pq;
+    int idx = 0,ans=0;
+    bool found = false;
     void inorder(TreeNode* root,int k){
-        if(root){
+        if(root && !found){
             inorder(root->left,k);
-            pq.push(root->val);
-            if(pq.size() > k) pq.pop();
+            idx++;
+            if(idx==k){
+                ans=root->val;
+                found = true;
+                return;
+            }
             inorder(root->right,k);
         }
     }
     int kthSmallest(TreeNode* root, int k) {
         inorder(root,k);
-        return pq.top();
+        return ans;
     }
 };
