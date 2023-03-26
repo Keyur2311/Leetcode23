@@ -1,26 +1,26 @@
 class Solution
 {
 public:
-    void dfs(int src, int par, vector<int> &parent, vector<int> adj[], vector<int> &vis, vector<int> &path)
+    int cycleStart = -1;
+    void dfs(int curr, int par, vector<int> adj[], vector<int> &vis, set<int> &cycle)
     {
-
-        vis[src] = 1;
-        parent[src] = par;
-        for (auto it : adj[src])
+        if (vis[curr])
         {
-            if (!vis[it])
-                dfs(it, src, parent, adj, vis, path);
-            else if (par != it && path.size()==0)
+            cycleStart = curr;
+            return;
+        }
+        vis[curr] = 1;
+        for (auto child : adj[curr])
+        {
+            if (child == par)
+                continue;
+            if (cycle.empty())
+                dfs(child, curr, adj, vis, cycle);
+            if (cycleStart != -1)
+                cycle.insert(curr);
+            if (curr == cycleStart)
             {
-                int curr = src;
-                path.push_back(curr);
-
-                while (curr!=-1 && parent[curr] != it)
-                {
-                    curr = parent[curr];
-                    path.push_back(curr);
-                }
-                path.push_back(it);
+                cycleStart = -1;
                 return;
             }
         }
@@ -38,15 +38,14 @@ public:
             adj[b].push_back(a);
         }
 
-        vector<int> vis(n + 1, 0), parent(n + 1, -1);
-        vector<int> path;
-        dfs(1, -1, parent, adj, vis, path);
+        vector<int> vis(n + 1, 0);
+        set<int> cycle;
+        dfs(1, -1, adj, vis, cycle);
 
         vector<int> res;
-        set<int> st(path.begin(), path.end());
         for (int i = 0; i < n; i++)
         {
-            if (st.count(edges[i][0]) && st.count(edges[i][1]))
+            if (cycle.count(edges[i][0]) && cycle.count(edges[i][1]))
                 res = edges[i];
         }
 
