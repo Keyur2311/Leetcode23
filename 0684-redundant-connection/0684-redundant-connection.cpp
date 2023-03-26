@@ -42,10 +42,6 @@ public:
         vector<int> path;
         dfs(1, -1, parent, adj, vis, path);
 
-        for (auto val : path)
-            cout << val << " ";
-        cout << endl;
-
         vector<int> res;
         set<int> st(path.begin(), path.end());
         for (int i = 0; i < n; i++)
