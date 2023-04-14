@@ -9,26 +9,21 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution{
+class Solution {
 public:
-    void countGoodNodes(TreeNode *root, multiset<int, greater<int>> &st, int &count){
-        if (root != NULL)
-        {
-
-            st.insert(root->val);
-            countGoodNodes(root->left,st,count);
-            int x = *(st.begin());
-            if (x == root->val)
-                count++;
-            countGoodNodes(root->right,st,count);
-            st.erase(st.find(root->val));
+    int count = 0;
+    void dfs(TreeNode* node,int curMax){
+        if (!node) return;
+        
+        if (node->val >= curMax){
+            count++;
+            curMax = node->val;
         }
+        dfs(node->left, curMax);
+        dfs(node->right, curMax);
     }
-    
-    int goodNodes(TreeNode *root) {
-        multiset<int, greater<int>> st;
-        int count = 0;
-        countGoodNodes(root, st, count);
+    int goodNodes(TreeNode* root) {
+        dfs(root, root->val);
         return count;
     }
 };
