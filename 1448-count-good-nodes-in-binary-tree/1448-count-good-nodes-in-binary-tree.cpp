@@ -9,21 +9,23 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
+class Solution{
 public:
-    int count = 0;
-    void dfs(TreeNode* node,int curMax){
-        if (!node) return;
-        
-        if (node->val >= curMax){
+    void countGoodNodes(TreeNode *root, int mx, int &count) {
+        if (!root)
+            return;
+
+        if (root->val >= mx){
             count++;
-            curMax = node->val;
+            mx = root->val;
         }
-        dfs(node->left, curMax);
-        dfs(node->right, curMax);
+        countGoodNodes(root->left, mx, count);
+        countGoodNodes(root->right, mx, count);
     }
-    int goodNodes(TreeNode* root) {
-        dfs(root, root->val);
+    
+    int goodNodes(TreeNode *root){
+        int count = 0, mx = root->val;
+        countGoodNodes(root, mx, count);
         return count;
     }
 };
