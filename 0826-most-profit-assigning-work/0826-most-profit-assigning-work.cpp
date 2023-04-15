@@ -1,17 +1,5 @@
 class Solution{
 public:
-    // class Compare {
-    // public:
-    //     bool operator()(const pair<int, int> &a,const pair<int, int> &b){
-    //         if (a.first < b.first)
-    //             return true;
-    //         else if (a.first == b.first && a.second < b.second)
-    //             return true;
-    //         else
-    //             return false;
-    //     }
-    // };
-    
     int maxProfitAssignment(vector<int> &difficulty, vector<int> &profit, vector<int> &worker){
         int n = (int)profit.size();
         int m = (int)worker.size();
