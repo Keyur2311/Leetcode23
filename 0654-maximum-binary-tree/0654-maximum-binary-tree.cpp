@@ -11,27 +11,22 @@
  */
 class Solution{
 public:
-    TreeNode *buildMaxTree(int l, int r, vector<int> nums){
-        if (l > r)
-            return NULL;
-
-        int  mx_idx = l;
-        for (int i = l; i <= r; i++){
-            if (nums[i] > nums[mx_idx])
-                mx_idx = i;
-        }
-
-        TreeNode *node = new TreeNode(nums[mx_idx]);
-
-        node->left = buildMaxTree(l, mx_idx - 1, nums);
-        node->right = buildMaxTree(mx_idx + 1, r, nums);
-
-        return node;
-    }
-
     TreeNode *constructMaximumBinaryTree(vector<int> &nums){
-        int n = (int)nums.size();
-        TreeNode *ans = buildMaxTree(0, n - 1, nums);
-        return ans;
+        vector<TreeNode *> st;
+
+        for (auto &val : nums){
+            TreeNode *curr = new TreeNode(val);
+            while (!st.empty() && val > st.back()->val)
+            {
+                curr->left = st.back();
+                st.pop_back();
+            }
+
+            if (!st.empty())
+                st.back()->right = curr;
+                
+            st.push_back(curr);
+        }
+        return st.front();
     }
 };
