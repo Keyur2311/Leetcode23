@@ -11,20 +11,21 @@
  */
 class Solution {
 public:
-    int ans = INT_MAX;
-    int prev = -1;
-    void helper(TreeNode* root){
-        if(!root) return;
-        
-        helper(root->left);
-        if(prev!=-1)
-        ans=min(ans,abs(root->val - prev));
-        prev = root->val;
-        helper(root->right);
+   int prev = -1;
+    void getAns(TreeNode *root, int &ans)
+    {
+        if (root != NULL)
+        {
+            getAns(root->left,ans);
+            if(prev!=-1) ans=min(ans,abs(prev - root->val));
+            prev = root->val;
+            getAns(root->right,ans);
+        }
     }
-    int minDiffInBST(TreeNode* root) {
-        if(!root) return 0;
-              helper(root);
-              return ans;
+    int minDiffInBST(TreeNode *root)
+    {
+        int ans = INT_MAX;
+        getAns(root, ans);
+        return ans;
     }
 };
