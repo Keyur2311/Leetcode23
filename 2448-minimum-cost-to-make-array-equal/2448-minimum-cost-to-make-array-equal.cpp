@@ -29,11 +29,7 @@ public:
         for (int i = 1; i < n; i++)
             cpref[i] = cpref[i - 1] + cost[i];
 
-        for (int i = 0; i < n; i++)
-            cout << mpref[i] << " ";
-        cout << endl;
-        for (int i = 0; i < n; i++)
-            cout << cpref[i] << " ";
+      
         long long int ans = LLONG_MAX;
 
         for (int i = 0; i < n; i++)
@@ -45,7 +41,7 @@ public:
                 val = (nums[i] * cpref[n - 2] - mpref[n - 2]);
             else
                 val = (nums[i] * cpref[i - 1] - mpref[i - 1]) + abs((nums[i] * (cpref[n - 1] - cpref[i]) - (mpref[n - 1] - mpref[i])));
-            cout << val << endl;
+           
             ans = min(ans, val);
         }
 
