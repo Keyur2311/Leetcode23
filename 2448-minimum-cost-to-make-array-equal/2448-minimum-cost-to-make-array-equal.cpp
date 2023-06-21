@@ -1,26 +1,54 @@
-class Solution {
+class Solution
+{
 public:
-    long long minCost(vector<int>& nums, vector<int>& cost) {
-        int n = nums.size();
-        long long ans = 1e18;
-        vector<pair<int,int>> v(n);
-        for(int i = 0; i < nums.size(); i++)
-            v[i] = {nums[i], cost[i]};
-        
-        sort(v.begin(), v.end());
-        vector<long long> pref(n), suff(n);
-        long long c_sum = 0, nc = 0;
-        for(int i = 0; i < n; i++){
-            pref[i] = (v[i].first * c_sum - nc);
-            c_sum += (long long)v[i].second;
-            nc += (long long)v[i].first * (long long)v[i].second;
+    long long minCost(vector<int> &nums, vector<int> &cost)
+    {
+        int n = (int)nums.size();
+
+        if (n == 1)
+            return 0;
+
+        vector<pair<long long int, long long int>> vp(n);
+        for (int i = 0; i < n; i++)
+            vp[i].first = nums[i], vp[i].second = cost[i];
+
+        sort(vp.begin(), vp.end());
+
+        for (int i = 0; i < n; i++)
+            nums[i] = vp[i].first, cost[i] = vp[i].second;
+
+        vector<long long> merge(n);
+        for (int i = 0; i < n; i++)
+            merge[i] = (long long int)(1LL * nums[i] * cost[i]);
+
+        vector<long long int> mpref(n, 0), cpref(n, 0);
+        mpref[0] = merge[0], cpref[0] = cost[0];
+
+        for (int i = 1; i < n; i++)
+            mpref[i] = mpref[i - 1] + merge[i];
+        for (int i = 1; i < n; i++)
+            cpref[i] = cpref[i - 1] + cost[i];
+
+        for (int i = 0; i < n; i++)
+            cout << mpref[i] << " ";
+        cout << endl;
+        for (int i = 0; i < n; i++)
+            cout << cpref[i] << " ";
+        long long int ans = LLONG_MAX;
+
+        for (int i = 0; i < n; i++)
+        {
+            long long int val = 0;
+            if (i == 0)
+                val = abs(nums[i] * (cpref[n - 1] - cpref[0]) - (mpref[n - 1] - mpref[0]));
+            else if (i == n - 1)
+                val = (nums[i] * cpref[n - 2] - mpref[n - 2]);
+            else
+                val = (nums[i] * cpref[i - 1] - mpref[i - 1]) + abs((nums[i] * (cpref[n - 1] - cpref[i]) - (mpref[n - 1] - mpref[i])));
+            cout << val << endl;
+            ans = min(ans, val);
         }
-        c_sum = 0, nc = 0;
-        for(int i = n - 1; i >= 0; i--){
-            ans = min(ans, abs(v[i].first * c_sum - nc) + pref[i]);
-            c_sum += (long long)v[i].second;
-            nc += (long long)v[i].first * (long long)v[i].second;
-        }
+
         return ans;
     }
 };
