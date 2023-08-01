@@ -7,7 +7,7 @@ class Solution {
   public:
     // Function to return a list containing the DFS traversal of the graph.
     
-    void dfs(int src, unordered_map<int,int> &vis,vector<int> adj[],vector<int> &ans){
+    void dfs(int src,vector<int> &vis,vector<int> adj[],vector<int> &ans){
         vis[src] = 1;
         ans.push_back(src);
         for(auto it:adj[src]){
@@ -17,8 +17,8 @@ class Solution {
     }
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
         // Code here
-        unordered_map<int,int> vis;
-        vector<int> ans;
+       
+        vector<int> ans,vis(V,0);
         
         int src = 0;
         dfs(src,vis,adj,ans);
