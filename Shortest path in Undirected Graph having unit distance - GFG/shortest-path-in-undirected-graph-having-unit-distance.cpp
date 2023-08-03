@@ -10,37 +10,33 @@ class Solution {
 public:
   vector<int> shortestPath(vector<vector<int>> &edges, int N, int M, int src) {
 
-    vector<pair<int, int>> g[N];
+    vector<int> g[N];
     for (int i = 0; i < M; i++) {
-      g[edges[i][0]].push_back({edges[i][1], 1});
-      g[edges[i][1]].push_back({edges[i][0], 1});
+      g[edges[i][0]].push_back(edges[i][1]);
+      g[edges[i][1]].push_back(edges[i][0]);
     }
 
-    priority_queue<pair<int, int>, vector<pair<int, int>>,
-                   greater<pair<int, int>>>
-        pq;
+    queue<int> q;
+    q.push(src);
+    vector<int> dis(N, INT_MAX), vis(N, 0);
+    dis[src] = 0, vis[src] = 1;
 
-    pq.push({0, src});
-
-    vector<int> dis(N, INT_MAX);
-    dis[src] = 0;
-
-    while (!pq.empty()) {
-      auto p = pq.top();
-      pq.pop();
-      int curr = p.second;
+    while (!q.empty()) {
+      auto p = q.front();
+      q.pop();
+      int curr = p;
 
       for (auto it : g[curr]) {
-        if (dis[curr] + it.second < dis[it.first]) {
-          dis[it.first] = dis[curr] + it.second;
-          pq.push({dis[it.first], it.first});
-        }
+        if (vis[it])
+          continue;
+        vis[it] = 1;
+        dis[it] = dis[curr] + 1;
+        q.push(it);
       }
     }
 
-   for (auto &it : dis)
+    for (auto &it : dis)
       it = (it == INT_MAX ? -1 : it);
-
 
     return dis;
   }
