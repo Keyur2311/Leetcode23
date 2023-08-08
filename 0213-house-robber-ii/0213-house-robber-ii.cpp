@@ -15,10 +15,9 @@ public:
       inc = new_inc;
     }
 
-    ans = max(exc, inc);
-    reverse(nums.begin(), nums.end());
+    ans = max(exc,inc);
     inc = 0, exc = 0;
-    for (int i = 0; i < n - 1; i++) {
+    for (int i = 1; i < n  ; i++) {
       int new_inc = exc + nums[i];
       int new_exc = max(inc, exc);
 
