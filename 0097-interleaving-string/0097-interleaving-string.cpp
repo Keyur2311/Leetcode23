@@ -1,22 +1,31 @@
 class Solution {
-  public:
-    int dp[102][102];
-  bool solve(string s1, string s2, string s3, int x, int y, int z) {
-    if (x < 0 and y < 0 and z < 0) return true;
-    if (x >= 0 and y >= 0 and dp[x][y] != -1) return dp[x][y];
-    if (x >= 0 and s1[x] == s3[z] and y >= 0 and s2[y] == s3[z])
-      return dp[x][y] = solve(s1, s2, s3, x - 1, y, z - 1) or solve(s1, s2, s3, x, y - 1, z - 1);
-    else if (x >= 0 and s1[x] == s3[z])
-      return solve(s1, s2, s3, x - 1, y, z - 1);
-    else if (y >= 0 and s2[y] == s3[z])
-      return solve(s1, s2, s3, x, y - 1, z - 1);
+public:
+  int solve(int i, int j, int k, string s1, string s2, string s3,
+             vector<vector<int>> &dp) {
+
+    if (i < 0 && j < 0 && k < 0)
+      return 1;
+
+    if (i >= 0 && j >= 0 && dp[i][j] != -1)
+      return dp[i][j];
+
+    if (i >= 0 && s1[i] == s3[k] && j >= 0 && s2[j] == s3[k])
+      return dp[i][j] = (solve(i - 1, j, k - 1, s1, s2, s3, dp) ||
+                         solve(i, j - 1, k - 1, s1, s2, s3, dp));
+    else if (i >= 0 && s1[i] == s3[k])
+      return solve(i - 1, j, k - 1, s1, s2, s3, dp);
+    else if (j >= 0 && s2[j] == s3[k])
+      return solve(i, j - 1, k - 1, s1, s2, s3, dp);
     else
-      return false;
+      return 0;
   }
   bool isInterleave(string s1, string s2, string s3) {
-    memset(dp, -1, sizeof(dp));
-    int x = s1.size(), y = s2.size(), z = s3.size();
-    if (x + y != z) return false;
-    return solve(s1, s2, s3, x - 1, y - 1, z - 1);
+    int n = (int)s1.size(), m = (int)s2.size(), x = (int)s3.size();
+
+    if (x != m + n)
+      return false;
+
+    vector<vector<int>> dp(n + 1, vector<int>(m + 1 , -1));
+    return (bool)solve(n - 1, m - 1, x - 1, s1, s2, s3, dp);
   }
 };
