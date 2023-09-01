@@ -137,12 +137,17 @@ void printCorner(Node *root) {
 
   while (!q.empty()) {
     int sz = q.size();
-    vector<int> v;
+    bool ok = false;
+    if (sz > 1)
+      ok = true;
+    int a = -1, b = -1;
     while (sz--) {
       auto tp = q.front();
       q.pop();
 
-      v.push_back(tp->data);
+      if (a == -1)
+        a = tp->data;
+      b = tp->data;
 
       if (tp->left)
         q.push(tp->left);
@@ -150,9 +155,8 @@ void printCorner(Node *root) {
         q.push(tp->right);
     }
 
-    cout << v[0] << " ";
-    int n = v.size();
-    if (n!=1)
-      cout << v[n - 1] << " ";
+    cout << a << " ";
+    if (ok)
+      cout << b << " ";
   }
 }
