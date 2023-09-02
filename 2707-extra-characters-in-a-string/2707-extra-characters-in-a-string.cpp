@@ -3,7 +3,6 @@ public:
   int minExtraChar(string s, vector<string> &dictionary) {
 
     int n = (int)s.size();
-
     vector<int> dp(n + 1, 0);
 
     for (int i = n - 1; i >= 0; i--) {
@@ -14,7 +13,7 @@ public:
           mx = max(mx, wordsize + dp[i + wordsize]);
         }
       }
-      dp[i] = max(mx,dp[i+1]);
+      dp[i] = max(mx, dp[i + 1]);
     }
     return n - dp[0];
   }
