@@ -1,31 +1,28 @@
 class Solution {
 public:
-  vector<vector<int>> result;
-
-  void comsum(vector<int> &curr, int target, int sum, vector<int> &candidates,
-              int curInd, int n) {
-    if (target == sum) {
+  void comsum(int idx, int target, int n, vector<int> &curr, vector<int> &arr,
+              vector<vector<int>> &result) {
+    if (target == 0) {
       result.push_back(curr);
-      return;
-    } else if (sum > target) {
       return;
     }
 
-    for (int i = curInd; i < n; i++) {
-      if (i != curInd && candidates[i] == candidates[i - 1])
+    for (int i = idx; i < n; i++) {
+      if (i != idx && arr[i] == arr[i - 1])
         continue;
-      sum += candidates[i];
-      curr.push_back(candidates[i]);
-      comsum(curr, target, sum, candidates, i + 1, n);
-      sum -= candidates[i];
+      if (arr[i] > target)
+        break;
+      curr.push_back(arr[i]);
+      comsum(i + 1, target - arr[i], n, curr, arr, result);
       curr.pop_back();
     }
   }
-  vector<vector<int>> combinationSum2(vector<int> &candidates, int target) {
+  vector<vector<int>> combinationSum2(vector<int> &arr, int target) {
     vector<int> curr;
-    int n = candidates.size();
-    sort(candidates.begin(), candidates.end());
-    comsum(curr, target, 0, candidates, 0, n);
+    int n = arr.size();
+    vector<vector<int>> result;
+    sort(arr.begin(), arr.end());
+    comsum(0, target, n, curr, arr, result);
     return result;
   }
 };
