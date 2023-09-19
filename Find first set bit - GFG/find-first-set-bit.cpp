@@ -11,16 +11,14 @@ using namespace std;
 
 class Solution {
 public:
-  bool CheckBit(int n, int X) { return (bool)(n & (1 << X)); }
-  
   unsigned int getFirstSetBit(int n) {
-    for (int i = 0; i <= 31; i++) {
-      if (CheckBit(n, i))
-        return i + 1;
-    }
-    return 0;
+
+    if (n == 0)
+      return 0;
+    return log2(n & (-n)) + 1;
   }
 };
+
 
 //{ Driver Code Starts.
 
