@@ -13,10 +13,10 @@ class Solution {
 public:
     void reverse(TreeNode* root){
         if(root!=NULL){
-            swap(root->left,root->right);
+            
             reverse(root->left);
             reverse(root->right);
-            // swap(root->left,root->right);
+            swap(root->left,root->right);
         }
     }
     TreeNode* invertTree(TreeNode* root) {
