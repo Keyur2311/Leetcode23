@@ -13,7 +13,6 @@ public:
           votes--;
       }
     }
-
     return c;
   }
 };
