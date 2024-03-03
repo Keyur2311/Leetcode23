@@ -5,10 +5,8 @@ public:
       return NULL;
     if (head->next == NULL)
       return NULL;
-
     ListNode *p1 = head;
     ListNode *p2 = head;
-
     for (int i = 0; i < k; i++)
       p2 = p2->next;
 
