@@ -8,6 +8,8 @@ public:
       int gc = 0;
       for (int j = i; j < n; j++) {
         gc = __gcd(gc, nums[j]);
+        if (nums[j] % k)
+          break;
         if (gc == k)
           ans++;
       }
