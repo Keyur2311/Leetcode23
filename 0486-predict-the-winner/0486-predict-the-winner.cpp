@@ -1,4 +1,3 @@
-
 class Solution {
 public:
   long long int solve(int i, int j, int turn, vector<int> &nums) {
@@ -15,13 +14,13 @@ public:
 
   bool predictTheWinner(vector<int> &nums) {
     int n = (int)nums.size();
-    long long int one = 0, two = 0;
+    long long int one = 0, two = 0, totalsum = 0;
 
     for (auto it : nums)
-      two += it;
+      totalsum += it;
 
     one = solve(0, n - 1, 1, nums);
-    two -= one;
+    two = totalsum - one;
 
     return one >= two;
   }
