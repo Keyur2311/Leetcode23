@@ -13,7 +13,7 @@ public:
       return min(solve(i + 1, j, 1, nums), solve(i, j - 1, 1, nums));
   }
 
-  bool PredictTheWinner(vector<int> &nums) {
+  bool predictTheWinner(vector<int> &nums) {
     int n = (int)nums.size();
     long long int one = 0, two = 0;
 
