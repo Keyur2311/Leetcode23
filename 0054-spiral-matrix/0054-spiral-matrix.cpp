@@ -16,20 +16,20 @@ public:
       i = sr, j = ec;
       while (i <= er)
         ans.push_back(matrix[i++][j]);
-        ec -= 1;
+      ec -= 1;
 
       i = er, j = ec;
-      
-      if(sr<=er){
-      while (j >= sc)
-        ans.push_back(matrix[i][j--]);
+
+      if (sr <= er) {
+        while (j >= sc)
+          ans.push_back(matrix[i][j--]);
         er -= 1;
       }
-      
+
       i = er, j = sc;
-      if(sc<=ec){
-      while (sc <= ec && i >= sr)
-        ans.push_back(matrix[i--][j]);
+      if (sc <= ec) {
+        while (sc <= ec && i >= sr)
+          ans.push_back(matrix[i--][j]);
         sc += 1;
       }
     }
