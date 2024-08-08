@@ -1,40 +1,39 @@
 class Solution {
 public:
-    vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        vector<int> output;
-        if (matrix.empty()) {
-            return output;
-        }
-        
-        int top = 0, bottom = matrix.size() - 1;
-        int left = 0, right = matrix[0].size() - 1;
-        
-        while (top <= bottom && left <= right) {
-            for (int i = left; i <= right; i++) {
-                output.push_back(matrix[top][i]);
-            }
-            top++;
-            
-            for (int i = top; i <= bottom; i++) {
-                output.push_back(matrix[i][right]);
-            }
-            right--;
-            
-            if (top <= bottom) {
-                for (int i = right; i >= left; i--) {
-                    output.push_back(matrix[bottom][i]);
-                }
-                bottom--;
-            }
-            
-            if (left <= right) {
-                for (int i = bottom; i >= top; i--) {
-                    output.push_back(matrix[i][left]);
-                }
-                left++;
-            }
-        }
-        
-        return output;
+  vector<int> spiralOrder(vector<vector<int>> &matrix) {
+    int n = (int)matrix.size();
+    int m = (int)matrix[0].size();
+
+    int sr = 0, er = n - 1, sc = 0, ec = m - 1;
+    vector<int> ans;
+
+    while (sr <= er && sc <= ec) {
+      int i = sr, j = sc;
+      while (j <= ec)
+        ans.push_back(matrix[i][j++]);
+      sr += 1;
+
+      i = sr, j = ec;
+      while (i <= er)
+        ans.push_back(matrix[i++][j]);
+        ec -= 1;
+
+      i = er, j = ec;
+      
+      if(sr<=er){
+      while (j >= sc)
+        ans.push_back(matrix[i][j--]);
+        er -= 1;
+      }
+      
+      i = er, j = sc;
+      if(sc<=ec){
+      while (sc <= ec && i >= sr)
+        ans.push_back(matrix[i--][j]);
+        sc += 1;
+      }
     }
+
+    return ans;
+  }
 };
