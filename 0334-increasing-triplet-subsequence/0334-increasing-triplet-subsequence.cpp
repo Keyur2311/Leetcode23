@@ -1,22 +1,19 @@
 // approach 1 : find LIS of nums. if LIS size is >=3 then ans is yes
 // approach 2 : prefix array for min and suffix array for max
+// approach 3:  use two variable min and max
 class Solution {
 public:
   bool increasingTriplet(vector<int> &nums) {
     int n = (int)nums.size();
 
-    vector<int> pref(n), suff(n);
+    int a = INT_MAX, b = INT_MAX;
 
-    pref[0] = nums[0];
-    for (int i = 1; i < n; i++)
-      pref[i] = min(pref[i - 1], nums[i]);
-
-    suff[n - 1] = nums[n - 1];
-    for (int i = n - 2; i >= 0; i--)
-      suff[i] = max(suff[i + 1], nums[i]);
-
-    for (int i = 1; i < n - 1; i++) {
-      if (pref[i - 1] < nums[i] && nums[i] < suff[i + 1])
+    for (int i = 0; i < n; i++) {
+      if (nums[i] <= a)
+        a = nums[i];
+      else if (nums[i] <= b)
+        b = nums[i];
+      else if (nums[i] > a && nums[i] > b)
         return true;
     }
     return false;
