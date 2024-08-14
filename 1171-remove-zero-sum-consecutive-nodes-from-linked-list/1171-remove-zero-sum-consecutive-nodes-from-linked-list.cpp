@@ -22,10 +22,9 @@ public:
       int sum = 0;
       while (temp) {
         sum += temp->val;
-        if (sum == 0){
+        if (sum == 0)
           curr->next = temp->next;
-          // break;
-        }
+        
         temp = temp->next;
       }
       curr = curr->next;
