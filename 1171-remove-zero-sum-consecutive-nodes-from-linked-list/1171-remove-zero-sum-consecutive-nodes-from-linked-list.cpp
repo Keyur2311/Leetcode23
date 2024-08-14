@@ -12,58 +12,24 @@
 class Solution {
 public:
   ListNode *removeZeroSumSublists(ListNode *head) {
-    vector<int> v;
-    ListNode *curr = head;
+    ListNode *dm = new ListNode(0);
+    dm->next = head;
+
+    ListNode *curr = dm;
+
     while (curr) {
-      v.push_back(curr->val);
+      ListNode *temp = curr->next;
+      int sum = 0;
+      while (temp) {
+        sum += temp->val;
+        if (sum == 0){
+          curr->next = temp->next;
+          // break;
+        }
+        temp = temp->next;
+      }
       curr = curr->next;
     }
-
-    while (true) {
-      int n = (int)v.size();
-
-      unordered_map<int, int> mp;
-      mp[0] = -1;
-      set<int> delIdx;
-
-      int sum = 0;
-      bool ok = false;
-
-      for (int i = 0; i < n; i++) {
-        sum += v[i];
-        if (mp.find(sum) != mp.end()) {
-          int l = mp[sum] += 1;
-          int r = i;
-          for (int j = l; j <= r; j++)
-            delIdx.insert(j);
-          ok = true;
-          break;
-        }
-        mp[sum] = i;
-      }
-
-      vector<int> temp;
-      for (int i = 0; i < n; i++) {
-        if (delIdx.count(i))
-          continue;
-        temp.push_back(v[i]);
-      }
-        
-      v = temp;
-        if (!ok)
-          break;
-    }
-
-    if (v.empty())
-      return NULL;
-
-    ListNode *newNode = new ListNode(v[0]);
-    ListNode *temp = newNode;
- 
-    for (int i = 1; i < (int)v.size(); i++) {
-      temp->next = new ListNode(v[i]);
-      temp = temp->next;
-    }
-    return newNode;
+    return dm->next;
   }
 };
